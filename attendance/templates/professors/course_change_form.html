@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'professors_home' %}">My Courses</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ course.Name }}</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">
+    {{ course.Name }}
+    <a href="www.google.com" class="btn btn-primary float-right">Compute Attendance</a>
+  </h2>
+  <div class="row mb-3">
+    <div class="col-md-6 col-sm-8 col-12">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <a href="{% url 'professors_home' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+        <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger float-right">Delete</a>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-10">
+          <strong>Students</strong>
+        </div>
+        
+      </div>
+    </div>
+    <div class="list-group list-group-flush list-group-formset">
+      {% for student in students %}
+        <div class="list-group-item">
+          <div class="row">
+            <div class="col-10">
+              <a href="www">{{ student.Rollno }}</a>
+            </div>
+            
+          </div>
+        </div>
+      {% empty %}
+        <div class="list-group-item text-center">
+          <p class="text-muted font-italic mb-0">You haven't added any Students yet. Go ahead and <a href="www">add the first student</a>.</p>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="card-footer">
+      <a href="www" class="btn btn-primary btn-sm">Add student</a>
+    </div>
+  </div>
+{% endblock %}
+
+

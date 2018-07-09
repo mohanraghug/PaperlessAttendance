@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'admin/header.html' with active='Entries' %}
+  
+  
+  <h2 class="mb-3">Entries</h2>
+  
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rollno</th>
+          <th>Course</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in entries %}
+          <tr>
+            <td class="align-middle"><a href="www"> {{entry.Date }}</a></td>
+            <td class="align-middle"><a href="www"> {{entry.Student.Rollno }}</a></td>
+            <td class="align-middle"><a href="www"> {{entry.Course.Name}}</a></td>
+            
+            
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any Professors yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

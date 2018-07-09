@@ -1,0 +1,28 @@
+from django.urls import path,include
+from .views import core,main,professors,admin,students
+urlpatterns = [
+    path('compute/<int:pk>', core.compute_attendance,name='compute_attendance'),
+    path('upload/',core.record_attendance),
+    path('',main.home,name='home'),
+    path('professors/',professors.CourseListView.as_view(),name='professors_home'),
+    path('professors/course_add/',professors.CourseCreateView.as_view(),name='course_add'),
+    path('professors/<int:pk>/',professors.CourseUpdateView.as_view(),name='course_change'),
+    path('professors/<int:pk>/delete',professors.CourseDeleteView.as_view(),name='course_delete'),
+    path('admin/',admin.StudentListView.as_view(),name='admin_home'),
+    path('admin/courses',admin.CourseListView.as_view(),name='admin_courses'),
+    path('admin/professors',admin.ProfessorsListView.as_view(),name='admin_professors'),
+    path('admin/attendance/',admin.AttendanceListView.as_view(),name='admin_attendance'),
+    path('admin/entries',admin.EntriesListView.as_view(),name='admin_entries'),
+    path('student/',students.CourseListView.as_view(),name='student_home'),
+    path('admin/courses/add',admin.course_add,name='admin_course_add'),
+    path('admin/students/add',admin.student_add,name='admin_student_add'),
+    path('admin/professors/add',admin.professor_add,name='admin_professor_add'),
+    path('admin/attendance/add',admin.attendance_add,name='admin_attendance_add'),
+    path('admin/courses/<int:pk>',admin.CourseUpdateView.as_view(),name='admin_course_update'),
+    path('admin/courses/delete/<int:pk>',admin.CourseDeleteView.as_view(),name='admin_course_delete'),
+    path('admin/students/<int:pk>',admin.StudentUpdateView.as_view(),name='admin_student_update'),
+    path('admin/students/delete/<int:pk>',admin.StudentDeleteView.as_view(),name='admin_student_delete'),
+    path('admin/<int:pk>/students/add',admin.course_add_students,name='admin_student_course_add'),
+    path('admin/professors/update/<int:pk>',admin.ProfessorUpdateView.as_view(),name='admin_professor_update'),
+    path('admin/professors/<int:pk>/delete',admin.ProfessorDeleteView.as_view(),name='admin_professor_delete'),
+]

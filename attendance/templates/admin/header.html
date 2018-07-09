@@ -1,0 +1,19 @@
+<h2>Administration</h2>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link{% if active == 'Students' %} active{% endif %}" href="{% url 'admin_home' %}">Students</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if active == 'Courses' %} active{% endif %}" href="{% url 'admin_courses' %}">Courses</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if active == 'Professors' %} active{% endif %}" href="{% url 'admin_professors' %}">Professors</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if active == 'Attendance' %} active{% endif %}" href="{% url 'admin_attendance' %}">Attendance</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if active == 'Entries' %} active{% endif %}" href="{% url 'admin_entries' %}">Entries</a>
+  </li>
+</ul>

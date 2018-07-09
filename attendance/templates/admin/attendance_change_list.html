@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'admin/header.html' with active='Attendance' %}
+  
+  
+  <h2 class="mb-3">Attendance</h2>
+  <a href="{% url 'admin_attendance_add' %}" class="btn btn-primary mb-3" role="button">Add Attendance</a>
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rollno</th>
+          <th>Course</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in attendance %}
+          <tr>
+                <td class="align-middle"><a href="www"> {{a.Date }}</a></td>
+            <td class="align-middle"><a href="www"> {{a.Student.Rollno }}</a></td>
+            <td class="align-middle"><a href="www"> {{a.Course.Name }}</a></td>
+            
+            
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any Attendance yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

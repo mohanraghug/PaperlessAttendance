@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Courses</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">My Courses</h2>
+  <a href="{% url 'course_add' %}" class="btn btn-primary mb-3" role="button">Add Course</a>
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Classes Held</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in courses.all %}
+          <tr>
+            <td class="align-middle"><a href="{% url 'course_change' course.pk %}"> {{course.Name }}</a></td>
+            
+            
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any course yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
