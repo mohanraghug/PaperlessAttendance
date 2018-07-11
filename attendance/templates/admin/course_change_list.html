@@ -20,7 +20,9 @@
           <tr>
             <td class="align-middle"><a href="{% url 'admin_course_update' course.pk %}"> {{course.Name }}</a></td>
             <td class="align-middle"><a href="www"> {{course.Professor.Name }}</a></td>
-            
+            <td class="text-right">
+              <a href="{% url 'compute_attendance' course.pk %}" class="btn btn-primary">Compute Attendace</a>
+            </td>
             
           </tr>
         {% empty %}

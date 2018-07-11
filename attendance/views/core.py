@@ -7,6 +7,15 @@ from attendance.models import Professor,Student,Course,Attendance,Entry
 import datetime
 import time
 import smtplib  as sl
+from django.core.mail import send_mail
+from django.conf import settings
+def sendmail(course):
+    subject='Notification regarding Attendance'
+    message=f'Your attendance has not been recorded todayfor course {course.Name}.Please contact admin in case of conflicts'
+    from_email=settings.EMAIL_HOST_USER
+    to_list=['mohanr@iitk.ac.in']
+    send_mail(subject,message,from_email,to_list,fail_silently=True)
+    return
 def send(course,recipints):
     """
     The main body
@@ -59,13 +68,13 @@ def send(course,recipints):
     server.quit()
 #A function to compare the first images using face api
 def first_image_comparison(img1,img2):
-    key = '403e07fcb1ac4421b6becd4e60f2c5fb'  # Replace with a valid Subscription Key here.
+    key = '9c8e1726760945da9917f227f2d2ad5a'  # Replace with a valid Subscription Key here.
     CF.Key.set(key)
 
-    base_url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/'  # Replace with your regional Base URL
+    base_url = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/'  # Replace with your regional Base URL
     CF.BaseUrl.set(base_url)
 
-    img_urls = [img1,img2]
+    img_urls = [img1.url,img2.url]
 
     faces = [CF.face.detect(img_url) for img_url in img_urls]
 
@@ -75,8 +84,8 @@ def first_image_comparison(img1,img2):
     return similarity
 #A function to compare second image using opencv
 def second_image_comparison(img1,img2):
-    a = cv2.imread(img1)
-    b = cv2.imread(img2)
+    a = cv2.imread(img1.url)
+    b = cv2.imread(img2.url)
     graya = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
     grayb = cv2.cvtColor(b, cv2.COLOR_BGR2GRAY)
     re_graya = cv2.resize(graya,(2000,2000))
@@ -137,11 +146,11 @@ def record_attendance(request):
         
 def compute_attendance(request,pk):
     c=Course.objects.get(pk=pk)
-    entries=Entry.objects.get(Course=c,Date=datetime.date.today())
-    if c.end_time<datetime.datetime.now().time():
-        return HttpResponse("Attendance Entries not recorded yet")
-    else:
+    sendmail(c)
+    entries=Entry.objects.filter(Course=c,date=datetime.date.today())
+    if len(entries)>=2:
         add_attendance(entries)
         return HttpResponse("Computed the Attendance for the course")
-
+    else:
+        return HttpResponse('No class today probably')
 

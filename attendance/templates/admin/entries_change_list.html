@@ -19,7 +19,7 @@
       <tbody>
         {% for entry in entries %}
           <tr>
-            <td class="align-middle"><a href="www"> 10Jul,2018</a></td>
+            <td class="align-middle"><a href="www"> {{entry.date}}</a></td>
             <td class="align-middle"><a href="www"> {{entry.Student.Rollno }}</a></td>
             <td class="align-middle"><a href="www"> {{entry.Course.Name}}</a></td>
             
@@ -27,7 +27,7 @@
           </tr>
         {% empty %}
           <tr>
-            <td class="bg-light text-center font-italic" colspan="5">You haven't created any Professors yet.</td>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any Entries yet.</td>
           </tr>
         {% endfor %}
       </tbody>
