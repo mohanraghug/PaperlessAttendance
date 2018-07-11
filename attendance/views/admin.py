@@ -89,12 +89,13 @@ def course_add(request):
 @admin_required
 def student_add(request):
     if request.method=='POST':
-        form=AdminStudentForm(request.POST)
+        form=AdminStudentForm(request.POST,request.FILES)
         if form.is_valid():
-            student=form.save(commit=False)
+            student=Student(Rollno=request.POST['Rollno'],Name=request.POST['Name'],Email=request.POST['Email'],Image=request.FILES['Image'])
             student.save()
             messages.success(request,'Student Added Successfully')
-            return redirect('admin_students')
+            return redirect('admin_home')
+        print(request.POST)
     else:
         form=AdminStudentForm()
     return render(request,'admin/student_add_form.html',{'form':form})
@@ -144,7 +145,7 @@ class CourseUpdateView(UpdateView):
         return Course.objects.all()
 
     def get_success_url(self):
-        return reverse('admin_course_update', kwargs={'pk': self.object.pk})
+        return reverse('admin_courses')
 @method_decorator([login_required, admin_required], name='dispatch')
 class CourseDeleteView(DeleteView):
     model = Course
@@ -179,7 +180,7 @@ class StudentUpdateView(UpdateView):
         return Student.objects.all()
 
     def get_success_url(self):
-        return reverse('admin_student_update', kwargs={'pk': self.object.pk})
+        return reverse('admin_home')
 @method_decorator([login_required, admin_required], name='dispatch')
 class StudentDeleteView(DeleteView):
     model = Student
@@ -206,7 +207,7 @@ def course_add_students(request, pk):
     if request.method == 'POST':
         form = StudentAddForm(request.POST)
         if form.is_valid():
-            rollno=form.cleaned_data.get('Rollno')
+            rollno=request.POST['Rollno']
             student=Student.objects.get(Rollno=rollno)
             course.Students.add(student)
             messages.success(request, 'Student added Successfully')

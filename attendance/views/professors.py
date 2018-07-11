@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from ..decorators import professor_required
-from attendance.forms import ProfessorSignUpForm
+from attendance.forms import ProfessorSignUpForm,StudentAddForm
 from ..models import user,Professor,Course,Student
 
 class ProfessorSignUpView(CreateView):
@@ -87,22 +87,22 @@ class CourseDeleteView(DeleteView):
         return Professor.objects.get(user=self.request.user).courses.all()
 @login_required
 @professor_required
-def question_add(request, pk):
+def course_add_students(request, pk):
     # By filtering the quiz by the url keyword argument `pk` and
     # by the owner, which is the logged in user, we are protecting
     # this view at the object-level. Meaning only the owner of
     # quiz will be able to add questions to it.
-    quiz = get_object_or_404(Student, pk=pk)
+    course = get_object_or_404(Course, pk=pk)
 
     if request.method == 'POST':
-        form = QuForm(request.POST)
+        form = StudentAddForm(request.POST)
         if form.is_valid():
-            question = form.save(commit=False)
-            question.quiz = quiz
-            question.save()
-            messages.success(request, 'You may now add answers/options to the question.')
-            return redirect('teachers:question_change', quiz.pk, question.pk)
+            rollno=request.POST['Rollno']
+            student=Student.objects.get(Rollno=rollno)
+            course.Students.add(student)
+            messages.success(request, 'Student added Successfully')
+            return redirect('course_change', course.pk)
     else:
-        form = QuestionForm()
+        form = StudentAddForm()
 
-    return render(request, 'classroom/teachers/question_add_form.html', {'quiz': quiz, 'form': form})
+    return render(request, 'professors/student_add_form.html', {'course': course, 'form': form})

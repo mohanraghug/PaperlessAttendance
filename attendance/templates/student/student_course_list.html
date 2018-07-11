@@ -12,6 +12,8 @@
         <tr>
           <th>Course</th>
           <th>Professor</th>
+          <th>Classes Held</th>
+          <th>Classes Attended</th>
           
         </tr>
       </thead>
@@ -20,12 +22,13 @@
           <tr>
             <td class="align-middle"><a href="www"> {{course.Name }}</a></td>
             <td class="align-middle"><a href="www"> {{course.Professor.Name }}</a></td>
+            <td class="align-middle"><a href="www"> {{course.Name }}</a></td>
             
             
           </tr>
         {% empty %}
           <tr>
-            <td class="bg-light text-center font-italic" colspan="5">You haven't created any Courses yet.</td>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't enrolled in any Courses yet.</td>
           </tr>
         {% endfor %}
       </tbody>

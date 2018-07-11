@@ -122,6 +122,7 @@ def add_attendance(entries):
 @csrf_exempt
 def record_attendance(request):
     if request.method=='POST':
+        print(request.POST)
         rollno=request.POST['Rollno']
         course=request.POST['Course']
         

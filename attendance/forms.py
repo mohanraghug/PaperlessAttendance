@@ -45,6 +45,7 @@ class AdminCourseForm(forms.ModelForm):
         model=Course
         fields=('Name','Professor','Start_time','end_time','TotalStrength')
 class AdminStudentForm(forms.ModelForm):
+    Image=forms.FileField()
     class Meta:
         model=Student
         fields=('Name','Rollno','Email','Image')

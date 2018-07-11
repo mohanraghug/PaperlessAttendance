@@ -5,7 +5,7 @@
 {% block content %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Students</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'admin_courses' %}">Courses</a></li>
       
       <li class="breadcrumb-item active" aria-current="page">Add a new Student</li>
     </ol>
@@ -15,6 +15,6 @@
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Save</button>
-    <a href="{% url 'admin_home' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+    <a href="{% url 'admin_course_update' course.pk %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
   </form>
 {% endblock %}

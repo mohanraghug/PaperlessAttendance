@@ -20,18 +20,39 @@ class StudentSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
+        
         return redirect('student_home')
-@method_decorator([login_required, student_required], name='dispatch')
-class CourseListView(ListView):
-    model=Course
-    ordering=('Name',)
-    context_object_name='courses'
-    template_name='student/student_course_list.html'
-    def get_queryset(self):
-        student=StudentUser.objects.get(user=self.request.user).Student
-        queryset=student.Courses.all()
-        return queryset
+def unique(a):
+    unique=[]
+    for x in a:
+        if x not in unique:
+            unique.append(x)
+    return len(unique)
+@login_required
+@student_required
+def CourseListView(request,pk):
+    student=Student.objects.get(pk=pk)
+    courses=student.Courses.all()
+    dictionary={}
+    a=[]
+    b=[]
+    for course in courses:
+        for attendance in course.attendance.all():
+            a.append(attendance.Date)
+        count1=unique(a)
+        attendane=Attendance.objects.filter(Student=student,Course=course)
+    for course in courses:
+
+        for ar in attendane:
+            b.append(ar.Date)
+        count2=unique(b)
+        dictionary[course.Name]=[count1,count2]
+    context={
+        'courses':courses,
+        'dictionary':dictionary
+    }
+    return render(request,student/course_change_list.html,context)
+    
+
 
 

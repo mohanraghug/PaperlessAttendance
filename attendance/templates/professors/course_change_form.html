@@ -11,7 +11,7 @@
   </nav>
   <h2 class="mb-3">
     {{ course.Name }}
-    <a href="www.google.com" class="btn btn-primary float-right">Compute Attendance</a>
+    <a href="www.google.com" class="btn btn-primary float-right">View Attendance</a>
   </h2>
   <div class="row mb-3">
     <div class="col-md-6 col-sm-8 col-12">
@@ -50,7 +50,7 @@
       {% endfor %}
     </div>
     <div class="card-footer">
-      <a href="www" class="btn btn-primary btn-sm">Add student</a>
+      <a href="{% url 'professor_course_students_add' course.pk %}" class="btn btn-primary btn-sm">Add student</a>
     </div>
   </div>
 {% endblock %}

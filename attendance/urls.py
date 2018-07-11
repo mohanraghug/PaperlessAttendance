@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/professors',admin.ProfessorsListView.as_view(),name='admin_professors'),
     path('admin/attendance/',admin.AttendanceListView.as_view(),name='admin_attendance'),
     path('admin/entries',admin.EntriesListView.as_view(),name='admin_entries'),
-    path('student/',students.CourseListView.as_view(),name='student_home'),
+    path('student/<int:pk>',students.CourseListView,name='student_home'),
     path('admin/courses/add',admin.course_add,name='admin_course_add'),
     path('admin/students/add',admin.student_add,name='admin_student_add'),
     path('admin/professors/add',admin.professor_add,name='admin_professor_add'),
@@ -25,4 +25,6 @@ urlpatterns = [
     path('admin/<int:pk>/students/add',admin.course_add_students,name='admin_student_course_add'),
     path('admin/professors/update/<int:pk>',admin.ProfessorUpdateView.as_view(),name='admin_professor_update'),
     path('admin/professors/<int:pk>/delete',admin.ProfessorDeleteView.as_view(),name='admin_professor_delete'),
+    path('professor/students/<int:pk>/add',professors.course_add_students,name='professor_course_students_add'),
+    
 ]
