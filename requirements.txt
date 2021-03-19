@@ -5,7 +5,7 @@ certifi==2018.4.16
 cffi==1.11.5
 chardet==3.0.4
 cognitive-face==1.4.1
-cryptography==2.3.0
+cryptography==3.2
 Django==2.0.1
 djangorestframework==3.5.3
 entrypoints==0.2.3
